@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19574f8f-739f-4de2-875a-464dce9f5928" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib__2_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib__4_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eruroport.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/postgresql-42.7.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DatabaseConnection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/SignUpForm.java" afterDir="false" />
-    </list>
+    <list default="true" id="19574f8f-739f-4de2-875a-464dce9f5928" name="Changes" comment="log in and sign up done" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -104,8 +90,16 @@
       <workItem from="1712040269694" duration="1473000" />
       <workItem from="1712041771835" duration="3332000" />
       <workItem from="1712086364662" duration="2129000" />
-      <workItem from="1712643415570" duration="3418000" />
+      <workItem from="1712643415570" duration="3805000" />
     </task>
+    <task id="LOCAL−00001" summary="log in and sign up done">
+      <option name="closed" value="true" />
+      <created>1712648923130</created>
+      <option name="number" value="LOCAL−00001" />
+      <option name="presentableId" value="LOCAL−00001" />
+      <updated>1712648923130</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -113,6 +107,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="log in and sign up done" />
+    <option name="LAST_COMMIT_MESSAGE" value="log in and sign up done" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
