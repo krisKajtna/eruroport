@@ -1,3 +1,4 @@
+import java.sql.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -5,14 +6,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.sql.*;
 
 public class LetalskeDruzbeInfo extends Application {
     private static final String PGHOST = "ep-cool-sea-a2dj5p9s.eu-central-1.aws.neon.tech";
@@ -47,10 +48,81 @@ public class LetalskeDruzbeInfo extends Application {
         userIdColumn.setCellValueFactory((data) -> {
             return new SimpleStringProperty(((String[])data.getValue())[3]);
         });
-        this.table.getColumns().addAll(new TableColumn[]{imeColumn, kraticaColumn, letaliscaIdColumn, userIdColumn});
+
+        // Enable editing of table cells
+        imeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        imeColumn.setOnEditCommit(event -> {
+            String newValue = event.getNewValue();
+            ((String[]) event.getTableView().getItems().get(event.getTablePosition().getRow()))[0] = newValue;
+        });
+
+        kraticaColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        kraticaColumn.setOnEditCommit(event -> {
+            String newValue = event.getNewValue();
+            ((String[]) event.getTableView().getItems().get(event.getTablePosition().getRow()))[1] = newValue;
+        });
+
+        letaliscaIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        letaliscaIdColumn.setOnEditCommit(event -> {
+            String newValue = event.getNewValue();
+            ((String[]) event.getTableView().getItems().get(event.getTablePosition().getRow()))[2] = newValue;
+        });
+
+        userIdColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        userIdColumn.setOnEditCommit(event -> {
+            String newValue = event.getNewValue();
+            ((String[]) event.getTableView().getItems().get(event.getTablePosition().getRow()))[3] = newValue;
+        });
+
+        // Add update and delete buttons to each row
+        TableColumn<String[], Void> updateColumn = new TableColumn<>("Update");
+        updateColumn.setCellFactory(param -> new TableCell<String[], Void>() {
+            private final Button updateButton = new Button("Update");
+
+            {
+                updateButton.setOnAction(event -> {
+                    String[] rowData = getTableView().getItems().get(getIndex());
+                    updateRow(rowData);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(updateButton);
+                }
+            }
+        });
+
+        TableColumn<String[], Void> deleteColumn = new TableColumn<>("Delete");
+        deleteColumn.setCellFactory(param -> new TableCell<String[], Void>() {
+            private final Button deleteButton = new Button("Delete");
+
+            {
+                deleteButton.setOnAction(event -> {
+                    String[] rowData = getTableView().getItems().get(getIndex());
+                    deleteRow(rowData);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(deleteButton);
+                }
+            }
+        });
+
+        this.table.getColumns().addAll(imeColumn, kraticaColumn, letaliscaIdColumn, userIdColumn, updateColumn, deleteColumn);
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:postgresql://ep-cool-sea-a2dj5p9s.eu-central-1.aws.neon.tech/europort2", "kris.kajtna", "gk3F9qeiwtXD");
+            Connection connection = DriverManager.getConnection(URL, PGUSER, PGPASSWORD);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM letalskedruzbe");
 
@@ -72,14 +144,13 @@ public class LetalskeDruzbeInfo extends Application {
         Button insertButton = new Button("Insert");
         insertButton.setOnAction(event -> insertRow());
 
-        Button updateButton = new Button("Update");
-        Button deleteButton = new Button("Delete");
+
         Button airportsButton = new Button("Letalisca");
         airportsButton.setOnAction((event) -> {
-            // Dodaj kodo za obdelavo dogodka za gumb za letalisca
+            // Add code for handling airports button click event
         });
 
-        HBox buttonBox = new HBox(10.0, insertButton, updateButton, deleteButton, airportsButton);
+        HBox buttonBox = new HBox(10.0, insertButton, airportsButton);
         buttonBox.setPadding(new javafx.geometry.Insets(10.0));
         HBox.setHgrow(airportsButton, Priority.ALWAYS);
 
@@ -90,6 +161,7 @@ public class LetalskeDruzbeInfo extends Application {
         primaryStage.setTitle("Izpis Tabele Letalskih Družb");
         primaryStage.show();
     }
+
     private void insertRow() {
         Platform.runLater(() -> {
             Stage insertStage = new Stage();
@@ -99,6 +171,13 @@ public class LetalskeDruzbeInfo extends Application {
         });
     }
 
+    private void updateRow(String[] rowData) {
+        // Implement update row functionality
+    }
+
+    private void deleteRow(String[] rowData) {
+        // Implement delete row functionality
+    }
     public void refreshTable() {
         this.data.clear();
 

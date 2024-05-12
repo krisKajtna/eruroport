@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19574f8f-739f-4de2-875a-464dce9f5928" name="Changes" comment="log in and sign up done">
-      <change afterPath="$PROJECT_DIR$/src/LetaliscaInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/LetalskeDruzbeInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/insertLetalisce.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/insertLetalskeDruzbe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
+    <list default="true" id="19574f8f-739f-4de2-875a-464dce9f5928" name="Changes" comment="lletalisce in letalskedruzbe koncane">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DatabaseConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SignUpForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignUpForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LetaliscaInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LetaliscaInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LetalskeDruzbeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LetalskeDruzbeInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/insertLetalskeDruzbe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/insertLetalskeDruzbe.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,14 +31,12 @@
     &quot;assignee&quot;: &quot;krisKajtna&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="e98b4fa8-dda9-42c1-bde5-2d91a4fad7e2" />
-        <option name="url" value="https://github.com/krisKajtna/eruroport.git" />
-      </UrlAndAccount>
-    </option>
-  </component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/krisKajtna/eruroport.git",
+    "accountId": "0dd6d9e7-cfe2-40c6-b39f-7560ae6e5be8"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -118,7 +111,7 @@
       <workItem from="1712643415570" duration="12441000" />
       <workItem from="1714143819422" duration="602000" />
       <workItem from="1715006041597" duration="6922000" />
-      <workItem from="1715431763617" duration="7519000" />
+      <workItem from="1715431763617" duration="14078000" />
     </task>
     <task id="LOCAL−00001" summary="log in and sign up done">
       <option name="closed" value="true" />
@@ -134,7 +127,14 @@
       <option name="presentableId" value="LOCAL−00002" />
       <updated>1712649235347</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL−00003" summary="lletalisce in letalskedruzbe koncane">
+      <option name="closed" value="true" />
+      <created>1715517289869</created>
+      <option name="number" value="LOCAL−00003" />
+      <option name="presentableId" value="LOCAL−00003" />
+      <updated>1715517289869</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,7 +143,8 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="log in and sign up done" />
-    <option name="LAST_COMMIT_MESSAGE" value="log in and sign up done" />
+    <MESSAGE value="lletalisce in letalskedruzbe koncane" />
+    <option name="LAST_COMMIT_MESSAGE" value="lletalisce in letalskedruzbe koncane" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

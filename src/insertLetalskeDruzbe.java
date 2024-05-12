@@ -24,8 +24,7 @@ public class insertLetalskeDruzbe extends Application {
 
     // This method assumes you have a way to get the logged in user ID
     private int getLoggedInUserId() {
-        // Replace this with your logic to get the logged in user ID
-        return 123; // Just a placeholder value, replace with actual implementation
+        return Main.getLoggedInUserID();
     }
 
     public void setLetalskeDruzbeInfo(LetalskeDruzbeInfo letalskeDruzbeInfo) {
