@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -7,9 +8,19 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class SignUpForm extends Application {
+
+    // Database connection details
+    private static final String PGHOST = "ep-cool-sea-a2dj5p9s.eu-central-1.aws.neon.tech";
+    private static final String PGDATABASE = "europort2";
+    private static final String PGUSER = "kris.kajtna";
+    private static final String PGPASSWORD = "gk3F9qeiwtXD";
+    private static final String URL = "jdbc:postgresql://" + PGHOST + "/" + PGDATABASE;
 
     @Override
     public void start(Stage primaryStage) {
@@ -39,14 +50,41 @@ public class SignUpForm extends Application {
             String password = passwordField.getText();
             String email = emailField.getText();
 
-            // Perform sign-up logic here (e.g., insert into database)
+            // Insert user into the database
+            try {
+                // Connect to the database
+                Connection connection = DriverManager.getConnection(URL, PGUSER, PGPASSWORD);
 
-            // For demonstration purposes, just print the information
-            System.out.println("Name: " + name);
-            System.out.println("Last Name: " + lastName);
-            System.out.println("Username: " + username);
-            System.out.println("Password: " + password);
-            System.out.println("Email: " + email);
+                // Create a prepared statement with parameters to prevent SQL injection
+                String query = "INSERT INTO userji (ime, priimek, uporabniskoime, geslo, email) VALUES (?, ?, ?, ?, ?)";
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, name);
+                preparedStatement.setString(2, lastName);
+                preparedStatement.setString(3, username);
+                preparedStatement.setString(4, password);
+                preparedStatement.setString(5, email);
+
+                // Execute the query
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("User signed up successfully!");
+                    // Close the sign-up form
+                    primaryStage.close();
+                    // Launch the main class
+                    Main.launch(Main.class);
+                    // Exit the JavaFX application
+                    Platform.exit();
+                } else {
+                    System.out.println("Failed to sign up user.");
+                }
+
+                // Close the connection and statement
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException ex) {
+                System.out.println("Error: " + ex.getMessage());
+            }
         });
 
         // Create a grid pane and add labels, fields, and button
