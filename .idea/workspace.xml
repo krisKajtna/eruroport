@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19574f8f-739f-4de2-875a-464dce9f5928" name="Changes" comment="lletalisce in letalskedruzbe koncane">
+    <list default="true" id="19574f8f-739f-4de2-875a-464dce9f5928" name="Changes" comment="lletalisce in letalskedruzbe dodal update pa delete button">
+      <change afterPath="$PROJECT_DIR$/src/updateLetalisca.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/updateLetalskeDruzbe.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/LetaliscaInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LetaliscaInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LetalskeDruzbeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LetalskeDruzbeInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/insertLetalskeDruzbe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/insertLetalskeDruzbe.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +18,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -111,7 +112,7 @@
       <workItem from="1712643415570" duration="12441000" />
       <workItem from="1714143819422" duration="602000" />
       <workItem from="1715006041597" duration="6922000" />
-      <workItem from="1715431763617" duration="14078000" />
+      <workItem from="1715431763617" duration="19685000" />
     </task>
     <task id="LOCAL−00001" summary="log in and sign up done">
       <option name="closed" value="true" />
@@ -134,7 +135,14 @@
       <option name="presentableId" value="LOCAL−00003" />
       <updated>1715517289869</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL−00004" summary="lletalisce in letalskedruzbe dodal update pa delete button">
+      <option name="closed" value="true" />
+      <created>1715523219189</created>
+      <option name="number" value="LOCAL−00004" />
+      <option name="presentableId" value="LOCAL−00004" />
+      <updated>1715523219190</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -144,7 +152,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="log in and sign up done" />
     <MESSAGE value="lletalisce in letalskedruzbe koncane" />
-    <option name="LAST_COMMIT_MESSAGE" value="lletalisce in letalskedruzbe koncane" />
+    <MESSAGE value="lletalisce in letalskedruzbe dodal update pa delete button" />
+    <option name="LAST_COMMIT_MESSAGE" value="lletalisce in letalskedruzbe dodal update pa delete button" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

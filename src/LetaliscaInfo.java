@@ -145,8 +145,17 @@ public class LetaliscaInfo extends Application {
     }
 
     private void updateRow(String[] rowData) {
-        // Implement update functionality here using rowData
+        // Open a dialog for updating the data
+        Stage updateStage = new Stage();
+        updateLetalisca updateLetalisce = new updateLetalisca(rowData);
+        updateLetalisce.setOnUpdateListener(() -> {
+            // Upon update confirmation, refresh the table
+            refreshTable();
+            updateStage.close();
+        });
+        updateLetalisce.start(updateStage);
     }
+
 
     private void deleteRow(String[] rowData) {
         // Implement delete functionality here using rowData
