@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19574f8f-739f-4de2-875a-464dce9f5928" name="Changes" comment="lletalisce in letalskedruzbe dodal update pa delete button">
-      <change afterPath="$PROJECT_DIR$/src/updateLetalisca.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/updateLetalskeDruzbe.java" afterDir="false" />
+    <list default="true" id="19574f8f-739f-4de2-875a-464dce9f5928" name="Changes" comment="update letalisca dela s posodablanjem letalisca tabele">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/LetaliscaInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LetaliscaInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LetalskeDruzbeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LetalskeDruzbeInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/updateLetalisca.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/updateLetalisca.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/updateLetalskeDruzbe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/updateLetalskeDruzbe.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +113,7 @@
       <workItem from="1712643415570" duration="12441000" />
       <workItem from="1714143819422" duration="602000" />
       <workItem from="1715006041597" duration="6922000" />
-      <workItem from="1715431763617" duration="19685000" />
+      <workItem from="1715431763617" duration="34820000" />
     </task>
     <task id="LOCAL−00001" summary="log in and sign up done">
       <option name="closed" value="true" />
@@ -142,7 +143,14 @@
       <option name="presentableId" value="LOCAL−00004" />
       <updated>1715523219190</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL−00005" summary="update letalisca dela">
+      <option name="closed" value="true" />
+      <created>1715544294114</created>
+      <option name="number" value="LOCAL−00005" />
+      <option name="presentableId" value="LOCAL−00005" />
+      <updated>1715544294114</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -153,7 +161,9 @@
     <MESSAGE value="log in and sign up done" />
     <MESSAGE value="lletalisce in letalskedruzbe koncane" />
     <MESSAGE value="lletalisce in letalskedruzbe dodal update pa delete button" />
-    <option name="LAST_COMMIT_MESSAGE" value="lletalisce in letalskedruzbe dodal update pa delete button" />
+    <MESSAGE value="update letalisca dela" />
+    <MESSAGE value="update letalisca dela s posodablanjem letalisca tabele" />
+    <option name="LAST_COMMIT_MESSAGE" value="update letalisca dela s posodablanjem letalisca tabele" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

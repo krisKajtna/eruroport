@@ -147,8 +147,8 @@ public class LetaliscaInfo extends Application {
     private void updateRow(String[] rowData) {
         // Open a dialog for updating the data
         Stage updateStage = new Stage();
-        updateLetalisca updateLetalisce = new updateLetalisca(rowData);
-        updateLetalisce.setOnUpdateListener(() -> {
+        updateLetalisca updateLetalisce = new updateLetalisca(rowData, this); // Pass 'this' which refers to the current LetaliscaInfo instance
+        updateLetalisce.setOnUpdateListener(updatedData -> {
             // Upon update confirmation, refresh the table
             refreshTable();
             updateStage.close();
