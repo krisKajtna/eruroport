@@ -146,21 +146,23 @@ public class LetaliscaInfo extends Application {
 
     private int getId(String ime, int kapacitetaPotnikov, int kapacitetaTovora) {
         int id = -1; // Default value if no airport is found
-        try (Connection connection = DatabaseConnection.getConnection()) {
-            String sql = "{ ? = call get_airport_id(?, ?, ?) }";
-            try (CallableStatement statement = connection.prepareCall(sql)) {
-                statement.registerOutParameter(1, Types.INTEGER);
-                statement.setString(2, ime);
-                statement.setInt(3, kapacitetaPotnikov);
-                statement.setInt(4, kapacitetaTovora);
-                statement.execute();
-                id = statement.getInt(1);
+        try (Connection connection = DriverManager.getConnection(URL, PGUSER, PGPASSWORD)) {
+            String sql = "SELECT id FROM letalisca WHERE ime=? AND kapacitetapotnikov=? AND kapacitetatovora=?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, ime);
+                statement.setInt(2, kapacitetaPotnikov);
+                statement.setInt(3, kapacitetaTovora);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    id = resultSet.getInt("id");
+                }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return id;
     }
+
 
 
 

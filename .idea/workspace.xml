@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19574f8f-739f-4de2-875a-464dce9f5928" name="Changes" comment="letalisca vsi strežniški podprogrami">
+    <list default="true" id="19574f8f-739f-4de2-875a-464dce9f5928" name="Changes" comment="letalske druzbe vsi strežniški podprogrami">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LetalskeDruzbeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LetalskeDruzbeInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LetaliscaInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LetaliscaInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/insertLetalisce.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/insertLetalisce.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +111,7 @@
       <workItem from="1712643415570" duration="12441000" />
       <workItem from="1714143819422" duration="602000" />
       <workItem from="1715006041597" duration="6922000" />
-      <workItem from="1715431763617" duration="42681000" />
+      <workItem from="1715431763617" duration="44438000" />
     </task>
     <task id="LOCAL−00001" summary="log in and sign up done">
       <option name="closed" value="true" />
@@ -196,7 +197,14 @@
       <option name="presentableId" value="LOCAL−00012" />
       <updated>1715635351394</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL−00013" summary="letalske druzbe vsi strežniški podprogrami">
+      <option name="closed" value="true" />
+      <created>1715636675552</created>
+      <option name="number" value="LOCAL−00013" />
+      <option name="presentableId" value="LOCAL−00013" />
+      <updated>1715636675552</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,7 +223,8 @@
     <MESSAGE value="main vsi strežniški podprogrami" />
     <MESSAGE value="sign up vsi strežniški podprogrami" />
     <MESSAGE value="letalisca vsi strežniški podprogrami" />
-    <option name="LAST_COMMIT_MESSAGE" value="letalisca vsi strežniški podprogrami" />
+    <MESSAGE value="letalske druzbe vsi strežniški podprogrami" />
+    <option name="LAST_COMMIT_MESSAGE" value="letalske druzbe vsi strežniški podprogrami" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

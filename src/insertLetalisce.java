@@ -127,6 +127,9 @@ public class insertLetalisce extends Application {
         }
     }
 
+
+
+
     private String getKrajId(String krajName) {
         try (Connection connection = DriverManager.getConnection(URL, PGUSER, PGPASSWORD);
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM kraji WHERE ime = ?")) {
@@ -143,24 +146,25 @@ public class insertLetalisce extends Application {
     }
 
     private void insertLetalisce(String ime, String kapacitetapotnikov, String kapacitetatovora, String letalskapovezava, String krajId) {
-        try (Connection connection = DriverManager.getConnection(URL, PGUSER, PGPASSWORD);
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "INSERT INTO letalisca (ime, kapacitetapotnikov, kapacitetatovora, letalskapovezava, kraj_id) " +
-                             "VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setString(1, ime);
-            preparedStatement.setInt(2, Integer.parseInt(kapacitetapotnikov)); // Parse as integer
-            preparedStatement.setInt(3, Integer.parseInt(kapacitetatovora)); // Parse as integer
-            preparedStatement.setString(4, letalskapovezava);
-            preparedStatement.setInt(5, Integer.parseInt(krajId)); // Parse as integer
-            int rowsAffected = preparedStatement.executeUpdate();
-            if (rowsAffected > 0) {
+        try (Connection connection = DatabaseConnection.getConnection();
+             CallableStatement statement = connection.prepareCall("{ ? = call insert_airport(?, ?, ?, ?, ?) }")) {
+
+            statement.registerOutParameter(1, Types.INTEGER);
+            statement.setString(2, ime);
+            statement.setInt(3, Integer.parseInt(kapacitetapotnikov)); // Parse as integer
+            statement.setInt(4, Integer.parseInt(kapacitetatovora)); // Parse as integer
+            statement.setString(5, letalskapovezava);
+            statement.setInt(6, Integer.parseInt(krajId)); // Parse as integer
+            statement.execute();
+
+            int airportId = statement.getInt(1);
+            if (airportId > 0) {
                 System.out.println("Letalisce inserted successfully!");
-                ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    int id = generatedKeys.getInt(1);
-                    letaliscaInfo.refreshTable(); // Update the table in LetaliscaInfo window
-                    stage.close(); // Close the insertLetalisce window
-                }
+                // Close the insertLetalisce window
+                stage.close();
+                // Open the LetaliscaInfo window
+                LetaliscaInfo letaliscaInfo = new LetaliscaInfo();
+                letaliscaInfo.start(new Stage());
             } else {
                 System.out.println("Failed to insert letalisce.");
             }
@@ -168,6 +172,8 @@ public class insertLetalisce extends Application {
             e.printStackTrace();
         }
     }
+
+
 
     public static void main(String[] args) {
         launch(args);
