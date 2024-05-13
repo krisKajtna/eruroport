@@ -146,22 +146,22 @@ public class LetaliscaInfo extends Application {
 
     private int getId(String ime, int kapacitetaPotnikov, int kapacitetaTovora) {
         int id = -1; // Default value if no airport is found
-        try (Connection connection = DriverManager.getConnection(URL, PGUSER, PGPASSWORD)) {
-            String sql = "SELECT id FROM letalisca WHERE ime=? AND kapacitetapotnikov=? AND kapacitetatovora=?";
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, ime);
-                statement.setInt(2, kapacitetaPotnikov);
-                statement.setInt(3, kapacitetaTovora);
-                ResultSet resultSet = statement.executeQuery();
-                if (resultSet.next()) {
-                    id = resultSet.getInt("id");
-                }
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String sql = "{ ? = call get_airport_id(?, ?, ?) }";
+            try (CallableStatement statement = connection.prepareCall(sql)) {
+                statement.registerOutParameter(1, Types.INTEGER);
+                statement.setString(2, ime);
+                statement.setInt(3, kapacitetaPotnikov);
+                statement.setInt(4, kapacitetaTovora);
+                statement.execute();
+                id = statement.getInt(1);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return id;
     }
+
 
 
     private void updateRow(String[] rowData) {
@@ -178,19 +178,15 @@ public class LetaliscaInfo extends Application {
 
 
     private void deleteRow(String[] rowData) {
-        int id = getId(rowData[0], Integer.parseInt(rowData[1]), Integer.parseInt(rowData[2])); // Get the airport ID using name, passenger capacity, and cargo capacity
-        if (id != -1) { // Check if airport ID is valid
-            try (Connection connection = DriverManager.getConnection(URL, PGUSER, PGPASSWORD)) {
-                String deleteSql = "DELETE FROM letalisca WHERE id = ?";
-                try (PreparedStatement statement = connection.prepareStatement(deleteSql)) {
-                    statement.setInt(1, id);
-                    int affectedRows = statement.executeUpdate();
-                    if (affectedRows == 1) {
-                        System.out.println("Delete successful.");
-                        refreshTable();
-                    } else {
-                        System.out.println("Delete failed.");
-                    }
+        int airport_id = getId(rowData[0], Integer.parseInt(rowData[1]), Integer.parseInt(rowData[2])); // Get the airport ID using name, passenger capacity, and cargo capacity
+        if (airport_id != -1) { // Check if airport ID is valid
+            try (Connection connection = DatabaseConnection.getConnection()) {
+                String deleteSql = "{ call delete_airport(?) }";
+                try (CallableStatement statement = connection.prepareCall(deleteSql)) {
+                    statement.setInt(1, airport_id);
+                    statement.execute();
+                    System.out.println("Delete successful.");
+                    refreshTable();
                 }
             } catch (SQLException ex) {
                 System.out.println("Error deleting row: " + ex.getMessage());
@@ -199,6 +195,7 @@ public class LetaliscaInfo extends Application {
             System.out.println("Invalid airport ID. Delete failed.");
         }
     }
+
 
 
     public void refreshTable() {
