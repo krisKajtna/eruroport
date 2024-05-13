@@ -9,10 +9,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 
 public class Main extends Application {
 
@@ -100,34 +98,35 @@ public class Main extends Application {
     private boolean authenticate(String username, String password) {
         try {
             Connection connection = DatabaseConnection.getConnection();
-            String query = "SELECT * FROM userji WHERE uporabniskoime = ? AND geslo = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            return resultSet.next(); // True if a matching record is found
+            String query = "{ ? = call authenticate_user(?, ?) }";
+            CallableStatement statement = connection.prepareCall(query);
+            statement.registerOutParameter(1, Types.BOOLEAN);
+            statement.setString(2, username);
+            statement.setString(3, password);
+            statement.execute();
+            return statement.getBoolean(1);
         } catch (SQLException e) {
             e.printStackTrace();
             return false; // Return false in case of exception
         }
     }
 
-    // Method to retrieve user ID based on username
+
     private int getUserID(String username) {
         try {
             Connection connection = DatabaseConnection.getConnection();
-            String query = "SELECT id FROM userji WHERE uporabniskoime = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, username);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt("id");
-            }
+            String query = "{ ? = call get_user_id(?) }";
+            CallableStatement statement = connection.prepareCall(query);
+            statement.registerOutParameter(1, Types.INTEGER);
+            statement.setString(2, username);
+            statement.execute();
+            return statement.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return -1; // Return -1 if user ID not found
+        return -1; // Return -1 if user ID not found or in case of exception
     }
+
 
     public static void main(String[] args) {
         launch(args);
