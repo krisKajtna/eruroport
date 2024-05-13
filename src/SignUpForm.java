@@ -8,10 +8,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+
+import java.sql.*;
 
 public class SignUpForm extends Application {
 
@@ -50,40 +48,19 @@ public class SignUpForm extends Application {
             String password = passwordField.getText();
             String email = emailField.getText();
 
-            // Insert user into the database
-            try {
-                // Connect to the database
-                Connection connection = DriverManager.getConnection(URL, PGUSER, PGPASSWORD);
+            // Register user
+            boolean success = registerUser(name, lastName, username, password, email);
 
-                // Create a prepared statement with parameters to prevent SQL injection
-                String query = "INSERT INTO userji (ime, priimek, uporabniskoime, geslo, email) VALUES (?, ?, ?, ?, ?)";
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, name);
-                preparedStatement.setString(2, lastName);
-                preparedStatement.setString(3, username);
-                preparedStatement.setString(4, password);
-                preparedStatement.setString(5, email);
-
-                // Execute the query
-                int rowsAffected = preparedStatement.executeUpdate();
-
-                if (rowsAffected > 0) {
-                    System.out.println("User signed up successfully!");
-                    // Close the sign-up form
-                    primaryStage.close();
-                    // Launch the main class
-                    Main.launch(Main.class);
-                    // Exit the JavaFX application
-                    Platform.exit();
-                } else {
-                    System.out.println("Failed to sign up user.");
-                }
-
-                // Close the connection and statement
-                preparedStatement.close();
-                connection.close();
-            } catch (SQLException ex) {
-                System.out.println("Error: " + ex.getMessage());
+            if (success) {
+                System.out.println("User signed up successfully!");
+                // Close the sign-up form
+                primaryStage.close();
+                // Launch the main class
+                Main.launch(Main.class);
+                // Exit the JavaFX application
+                Platform.exit();
+            } else {
+                System.out.println("Failed to sign up user.");
             }
         });
 
@@ -111,6 +88,26 @@ public class SignUpForm extends Application {
         primaryStage.setTitle("Sign Up Form");
         primaryStage.show();
     }
+
+    private boolean registerUser(String name, String lastName, String username, String password, String email) {
+        try {
+            Connection connection = DatabaseConnection.getConnection();
+            String query = "{ ? = call register_user(?, ?, ?, ?, ?) }";
+            CallableStatement statement = connection.prepareCall(query);
+            statement.registerOutParameter(1, Types.BOOLEAN);
+            statement.setString(2, name);
+            statement.setString(3, lastName);
+            statement.setString(4, username);
+            statement.setString(5, password);
+            statement.setString(6, email);
+            statement.execute();
+            return statement.getBoolean(1);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false; // Return false in case of exception
+        }
+    }
+
 
     public static void main(String[] args) {
         launch(args);
