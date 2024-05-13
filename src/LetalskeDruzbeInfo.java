@@ -151,8 +151,16 @@ public class LetalskeDruzbeInfo extends Application {
 
         Button airportsButton = new Button("Letalisca");
         airportsButton.setOnAction((event) -> {
-            // Add code for handling airports button click event
+            LetaliscaInfo letaliscaInfo = new LetaliscaInfo();
+            Stage letaliscaStage = new Stage();
+            letaliscaInfo.start(letaliscaStage);
+
+            // Zapri trenutno odprto okno LetalskeDruzbeInfo
+            Stage currentStage = (Stage) airportsButton.getScene().getWindow();
+            currentStage.close();
         });
+
+
 
         HBox buttonBox = new HBox(10.0, insertButton, airportsButton);
         buttonBox.setPadding(new javafx.geometry.Insets(10.0));
@@ -177,21 +185,21 @@ public class LetalskeDruzbeInfo extends Application {
 
     private int getAirlineId(String ime, String kratica) {
         int id = -1; // Default value if no airline is found
-        try (Connection connection = DriverManager.getConnection(URL, PGUSER, PGPASSWORD)) {
-            String sql = "SELECT id FROM letalskedruzbe WHERE ime=? AND kratica=?";
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, ime);
-                statement.setString(2, kratica);
-                ResultSet resultSet = statement.executeQuery();
-                if (resultSet.next()) {
-                    id = resultSet.getInt("id");
-                }
+        try (Connection connection = DatabaseConnection.getConnection()) {
+            String sql = "{ ? = call get_airline_id(?, ?) }";
+            try (CallableStatement statement = connection.prepareCall(sql)) {
+                statement.registerOutParameter(1, Types.INTEGER);
+                statement.setString(2, ime);
+                statement.setString(3, kratica);
+                statement.execute();
+                id = statement.getInt(1);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return id;
     }
+
 
 
     private void updateRow(String[] rowData, int airlineId) {
@@ -208,17 +216,13 @@ public class LetalskeDruzbeInfo extends Application {
     private void deleteRow(String[] rowData) {
         int airlineId = getAirlineId(rowData[0], rowData[1]); // Get the airline ID using the name and acronym
         if (airlineId != -1) { // Check if airline ID is valid
-            try (Connection connection = DriverManager.getConnection(URL, PGUSER, PGPASSWORD)) {
-                String deleteSql = "DELETE FROM letalskedruzbe WHERE id = ?";
-                try (PreparedStatement statement = connection.prepareStatement(deleteSql)) {
+            try (Connection connection = DatabaseConnection.getConnection()) {
+                String deleteSql = "{ call delete_airline(?) }";
+                try (CallableStatement statement = connection.prepareCall(deleteSql)) {
                     statement.setInt(1, airlineId);
-                    int affectedRows = statement.executeUpdate();
-                    if (affectedRows == 1) {
-                        System.out.println("Delete successful.");
-                        refreshTable();
-                    } else {
-                        System.out.println("Delete failed.");
-                    }
+                    statement.execute();
+                    System.out.println("Delete successful.");
+                    refreshTable();
                 }
             } catch (SQLException ex) {
                 System.out.println("Error deleting row: " + ex.getMessage());
@@ -227,6 +231,7 @@ public class LetalskeDruzbeInfo extends Application {
             System.out.println("Invalid airline ID. Delete failed.");
         }
     }
+
 
 
     public void refreshTable() {
