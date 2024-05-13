@@ -205,12 +205,30 @@ public class LetalskeDruzbeInfo extends Application {
     }
 
 
-
-
-
     private void deleteRow(String[] rowData) {
-        // Implement delete row functionality
+        int airlineId = getAirlineId(rowData[0], rowData[1]); // Get the airline ID using the name and acronym
+        if (airlineId != -1) { // Check if airline ID is valid
+            try (Connection connection = DriverManager.getConnection(URL, PGUSER, PGPASSWORD)) {
+                String deleteSql = "DELETE FROM letalskedruzbe WHERE id = ?";
+                try (PreparedStatement statement = connection.prepareStatement(deleteSql)) {
+                    statement.setInt(1, airlineId);
+                    int affectedRows = statement.executeUpdate();
+                    if (affectedRows == 1) {
+                        System.out.println("Delete successful.");
+                        refreshTable();
+                    } else {
+                        System.out.println("Delete failed.");
+                    }
+                }
+            } catch (SQLException ex) {
+                System.out.println("Error deleting row: " + ex.getMessage());
+            }
+        } else {
+            System.out.println("Invalid airline ID. Delete failed.");
+        }
     }
+
+
     public void refreshTable() {
         this.data.clear();
 
