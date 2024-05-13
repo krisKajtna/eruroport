@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19574f8f-739f-4de2-875a-464dce9f5928" name="Changes" comment="update letalske druzbe dela s posodablanjem letalske druzbe tabele">
+    <list default="true" id="19574f8f-739f-4de2-875a-464dce9f5928" name="Changes" comment="delete letalske druzbe deluje">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/LetalskeDruzbeInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LetalskeDruzbeInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LetaliscaInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LetaliscaInfo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +110,7 @@
       <workItem from="1712643415570" duration="12441000" />
       <workItem from="1714143819422" duration="602000" />
       <workItem from="1715006041597" duration="6922000" />
-      <workItem from="1715431763617" duration="36280000" />
+      <workItem from="1715431763617" duration="36926000" />
     </task>
     <task id="LOCAL−00001" summary="log in and sign up done">
       <option name="closed" value="true" />
@@ -161,7 +161,14 @@
       <option name="presentableId" value="LOCAL−00007" />
       <updated>1715627549667</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL−00008" summary="delete letalske druzbe deluje">
+      <option name="closed" value="true" />
+      <created>1715628966875</created>
+      <option name="number" value="LOCAL−00008" />
+      <option name="presentableId" value="LOCAL−00008" />
+      <updated>1715628966875</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,7 +182,8 @@
     <MESSAGE value="update letalisca dela" />
     <MESSAGE value="update letalisca dela s posodablanjem letalisca tabele" />
     <MESSAGE value="update letalske druzbe dela s posodablanjem letalske druzbe tabele" />
-    <option name="LAST_COMMIT_MESSAGE" value="update letalske druzbe dela s posodablanjem letalske druzbe tabele" />
+    <MESSAGE value="delete letalske druzbe deluje" />
+    <option name="LAST_COMMIT_MESSAGE" value="delete letalske druzbe deluje" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
