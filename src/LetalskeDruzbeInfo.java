@@ -25,6 +25,7 @@ public class LetalskeDruzbeInfo extends Application {
     private ObservableList<String[]> data;
 
     public static void main(String[] args) {
+        LetalskeDruzbeInfo letalskeDruzbeInfo = new LetalskeDruzbeInfo();
         launch(args);
     }
 
@@ -80,9 +81,11 @@ public class LetalskeDruzbeInfo extends Application {
             private final Button updateButton = new Button("Update");
 
             {
+                // Inside the updateColumn setCellFactory method
                 updateButton.setOnAction(event -> {
                     String[] rowData = getTableView().getItems().get(getIndex());
-                    updateRow(rowData);
+                    int airlineId = getAirlineId(rowData[0], rowData[1]); // Assuming the first two elements represent the name and acronym
+                    updateRow(rowData, airlineId);
                 });
             }
 
@@ -95,6 +98,7 @@ public class LetalskeDruzbeInfo extends Application {
                     setGraphic(updateButton);
                 }
             }
+
         });
 
         TableColumn<String[], Void> deleteColumn = new TableColumn<>("Delete");
@@ -156,7 +160,7 @@ public class LetalskeDruzbeInfo extends Application {
 
         VBox layout = new VBox(10.0, this.table, buttonBox);
         layout.setPadding(new javafx.geometry.Insets(10.0));
-        Scene scene = new Scene(layout, 600.0, 400.0);
+        Scene scene = new Scene(layout, 700.0, 450.0);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Izpis Tabele Letalskih Družb");
         primaryStage.show();
@@ -171,9 +175,38 @@ public class LetalskeDruzbeInfo extends Application {
         });
     }
 
-    private void updateRow(String[] rowData) {
-        // Implement update row functionality
+    private int getAirlineId(String ime, String kratica) {
+        int id = -1; // Default value if no airline is found
+        try (Connection connection = DriverManager.getConnection(URL, PGUSER, PGPASSWORD)) {
+            String sql = "SELECT id FROM letalskedruzbe WHERE ime=? AND kratica=?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, ime);
+                statement.setString(2, kratica);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    id = resultSet.getInt("id");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return id;
     }
+
+
+    private void updateRow(String[] rowData, int airlineId) {
+        Stage updateStage = new Stage();
+        updateLetalskeDruzbe updateLetalskeDruzbe = new updateLetalskeDruzbe(rowData, airlineId, this); // Pass 'this' as the third parameter
+        updateLetalskeDruzbe.setOnUpdateListener(updatedData -> {
+            refreshTable();
+            updateStage.close();
+        });
+        updateLetalskeDruzbe.start(updateStage);
+    }
+
+
+
+
 
     private void deleteRow(String[] rowData) {
         // Implement delete row functionality
