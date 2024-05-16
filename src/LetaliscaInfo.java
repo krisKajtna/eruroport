@@ -144,7 +144,7 @@ public class LetaliscaInfo extends Application {
         });
     }
 
-    private int getId(String ime, int kapacitetaPotnikov, int kapacitetaTovora) {
+    public int getId(String ime, int kapacitetaPotnikov, int kapacitetaTovora) {
         int id = -1; // Default value if no airport is found
         try (Connection connection = DriverManager.getConnection(URL, PGUSER, PGPASSWORD)) {
             String sql = "SELECT id FROM letalisca WHERE ime=? AND kapacitetapotnikov=? AND kapacitetatovora=?";

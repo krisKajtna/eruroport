@@ -185,21 +185,21 @@ public class LetalskeDruzbeInfo extends Application {
 
     private int getAirlineId(String ime, String kratica) {
         int id = -1; // Default value if no airline is found
-        try (Connection connection = DatabaseConnection.getConnection()) {
-            String sql = "{ ? = call get_airline_id(?, ?) }";
-            try (CallableStatement statement = connection.prepareCall(sql)) {
-                statement.registerOutParameter(1, Types.INTEGER);
-                statement.setString(2, ime);
-                statement.setString(3, kratica);
-                statement.execute();
-                id = statement.getInt(1);
+        try (Connection connection = DriverManager.getConnection(URL, PGUSER, PGPASSWORD)) {
+            String sql = "SELECT id FROM letalskedruzbe WHERE ime=? AND kratica=?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, ime);
+                statement.setString(2, kratica);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    id = resultSet.getInt("id");
+                }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return id;
     }
-
 
 
     private void updateRow(String[] rowData, int airlineId) {

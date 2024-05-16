@@ -1,10 +1,14 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -26,7 +30,7 @@ public class updateLetalisca {
 
     public updateLetalisca(String[] rowData, LetaliscaInfo letaliscaInfo) {
         this.rowData = rowData;
-        this.letaliscaInfo = letaliscaInfo; // Initialize letaliscaInfo
+        this.letaliscaInfo = letaliscaInfo;
     }
 
     public void start(Stage updateStage) {
@@ -57,10 +61,12 @@ public class updateLetalisca {
         TextField letalskaPovezavaField = new TextField(rowData[3]);
         GridPane.setConstraints(letalskaPovezavaField, 1, 3);
 
-        Label krajIdLabel = new Label("Kraj ID:");
+        Label krajIdLabel = new Label("Kraj:");
         GridPane.setConstraints(krajIdLabel, 0, 4);
-        TextField krajIdField = new TextField(rowData[4]);
-        GridPane.setConstraints(krajIdField, 1, 4);
+        ComboBox<String> krajIdComboBox = new ComboBox<>();
+        GridPane.setConstraints(krajIdComboBox, 1, 4);
+
+        loadKraji(krajIdComboBox);
 
         Button updateButton = new Button("Update");
         GridPane.setConstraints(updateButton, 1, 5);
@@ -70,7 +76,7 @@ public class updateLetalisca {
             rowData[1] = kapacitetaPotnikovField.getText();
             rowData[2] = kapacitetaTovoraField.getText();
             rowData[3] = letalskaPovezavaField.getText();
-            rowData[4] = krajIdField.getText();
+            rowData[4] = krajIdComboBox.getValue().split(":")[0]; // Extract Kraj ID from selected value
 
             // Invoke the listener to notify the main application with updated data
             if (listener != null) {
@@ -86,7 +92,7 @@ public class updateLetalisca {
                 kapacitetaPotnikovLabel, kapacitetaPotnikovField,
                 kapacitetaTovoraLabel, kapacitetaTovoraField,
                 letalskaPovezavaLabel, letalskaPovezavaField,
-                krajIdLabel, krajIdField,
+                krajIdLabel, krajIdComboBox,
                 updateButton);
 
         Scene scene = new Scene(grid, 400, 250);
@@ -100,14 +106,14 @@ public class updateLetalisca {
 
     private void updateDatabase(String[] rowData) {
         try (Connection connection = DriverManager.getConnection(URL, PGUSER, PGPASSWORD)) {
-            String sql = "UPDATE letalisca SET ime=?, kapacitetapotnikov=?, kapacitetatovora=?, letalskapovezava=?, kraj_id=? WHERE ime=?";
+            String sql = "UPDATE letalisca SET ime=?, kapacitetapotnikov=?, kapacitetatovora=?, letalskapovezava=?, kraj_id=? WHERE id=?";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, rowData[0]); // Name
                 statement.setInt(2, Integer.parseInt(rowData[1])); // Convert to integer
                 statement.setInt(3, Integer.parseInt(rowData[2])); // Convert to integer
                 statement.setString(4, rowData[3]); // Letalska Povezava
                 statement.setInt(5, Integer.parseInt(rowData[4])); // Convert to integer
-                statement.setString(6, rowData[0]); // Use the original name for identification
+                statement.setInt(6, Integer.parseInt(getIdAsString(rowData[0], Integer.parseInt(rowData[1]), Integer.parseInt(rowData[2])))); // Convert to integer
                 int affectedRows = statement.executeUpdate();
                 if (affectedRows == 1) {
                     System.out.println("Update successful.");
@@ -121,4 +127,33 @@ public class updateLetalisca {
         }
     }
 
+    private String getIdAsString(String ime, int kapacitetaPotnikov, int kapacitetaTovora) {
+        int id = letaliscaInfo.getId(ime, kapacitetaPotnikov, kapacitetaTovora);
+        return String.valueOf(id);
+    }
+
+    private void loadKraji(ComboBox<String> krajIdComboBox) {
+        try (Connection connection = DriverManager.getConnection(URL, PGUSER, PGPASSWORD)) {
+            String sql = "SELECT id, ime FROM kraji";
+            try (PreparedStatement statement = connection.prepareStatement(sql);
+                 ResultSet resultSet = statement.executeQuery()) {
+                ObservableList<String> krajiList = FXCollections.observableArrayList();
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String ime = resultSet.getString("ime");
+                    krajiList.add(id + ": " + ime);
+                }
+                krajIdComboBox.setItems(krajiList);
+                // Set default value based on existing data
+                for (String item : krajiList) {
+                    if (item.startsWith(rowData[4] + ":")) {
+                        krajIdComboBox.setValue(item);
+                        break;
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error loading kraji: " + ex.getMessage());
+        }
+    }
 }
